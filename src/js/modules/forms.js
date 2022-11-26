@@ -1,6 +1,6 @@
 // import checkNumInputs from './checkNumInputs';
 
-import { stat } from '@babel/core/lib/gensync-utils/fs';
+// import { stat } from '@babel/core/lib/gensync-utils/fs';
 
 const forms = () => {
   const form = document.querySelectorAll('form');

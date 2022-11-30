@@ -1,6 +1,7 @@
-const sliders = function (slides, dir, prev, next) {
-  let slideIndex = 1;
-  let paused = false;
+const sliders = (slides, dir, prev, next) => {
+  let slideIndex = 1,
+    paused = false;
+
   const items = document.querySelectorAll(slides);
 
   function showSlides(n) {
@@ -35,6 +36,7 @@ const sliders = function (slides, dir, prev, next) {
       items[slideIndex - 1].classList.remove('slideInLeft');
       items[slideIndex - 1].classList.add('slideInRight');
     });
+
     nextBtn.addEventListener('click', () => {
       plusSlides(1);
       items[slideIndex - 1].classList.remove('slideInRight');
@@ -65,4 +67,5 @@ const sliders = function (slides, dir, prev, next) {
     activateAnimation();
   });
 };
+
 export default sliders;

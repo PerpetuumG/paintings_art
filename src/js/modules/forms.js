@@ -1,11 +1,9 @@
-import {postData} from '../services/requests';
+import { postData } from '../services/requests';
 
 const forms = () => {
-  const form = document.querySelectorAll('form');
-  const inputs = document.querySelectorAll('input');
-  const upload = document.querySelectorAll('[name="upload"]');
-
-  // checkNumInputs('input[name="user_phone"]');
+  const form = document.querySelectorAll('form'),
+    inputs = document.querySelectorAll('input'),
+    upload = document.querySelectorAll('[name="upload"]');
 
   const message = {
     loading: 'Загрузка...',
@@ -21,8 +19,6 @@ const forms = () => {
     question: 'assets/question.php',
   };
 
-
-
   const clearInputs = () => {
     inputs.forEach(item => {
       item.value = '';
@@ -37,6 +33,7 @@ const forms = () => {
       console.log(item.files[0]);
       let dots;
       const arr = item.files[0].name.split('.');
+
       arr[0].length > 6 ? (dots = '...') : (dots = '.');
       const name = arr[0].substring(0, 6) + dots + arr[1];
       item.previousElementSibling.textContent = name;

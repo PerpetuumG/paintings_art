@@ -46,13 +46,87 @@ const checkTextInputs = selector => {
   const txtInputs = document.querySelectorAll(selector);
   txtInputs.forEach(input => {
     input.addEventListener('keypress', function (e) {
-      if (e.key.match(/[^а-яё 0-9]/gi)) {
+      if (e.key.match(/[^а-яё 0-9]/ig)) {
         e.preventDefault();
       }
     });
   });
 };
 /* harmony default export */ __webpack_exports__["default"] = (checkTextInputs);
+
+/***/ }),
+
+/***/ "./src/js/modules/filter.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/filter.js ***!
+  \**********************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+const filter = () => {
+  const menu = document.querySelector('.portfolio-menu'),
+    items = menu.querySelectorAll('li'),
+    btnAll = menu.querySelector('.all'),
+    btnLovers = menu.querySelector('.lovers'),
+    btnChef = menu.querySelector('.chef'),
+    btnGirl = menu.querySelector('.girl'),
+    btnGuy = menu.querySelector('.guy'),
+    btnGrandmother = menu.querySelector('.grandmother'),
+    btnGranddad = menu.querySelector('.granddad'),
+    wrapper = document.querySelector('.portfolio-wrapper'),
+    markAll = wrapper.querySelectorAll('.all'),
+    markGirl = wrapper.querySelectorAll('.girl'),
+    markLovers = wrapper.querySelectorAll('.lovers'),
+    markChef = wrapper.querySelectorAll('.chef'),
+    markGuy = wrapper.querySelectorAll('.guy'),
+    no = document.querySelector('.portfolio-no');
+  const typeFilter = markType => {
+    markAll.forEach(mark => {
+      mark.style.display = 'none';
+      mark.classList.remove('animated', 'fadeIn');
+    });
+    no.style.display = 'none';
+    no.classList.remove('animated', 'fadeIn');
+    if (markType) {
+      markType.forEach(mark => {
+        mark.style.display = 'block';
+        mark.classList.add('animated', 'fadeIn');
+      });
+    } else {
+      no.style.display = 'block';
+      no.classList.add('animated', 'fadeIn');
+    }
+  };
+  btnAll.addEventListener('click', () => {
+    typeFilter(markAll);
+  });
+  btnLovers.addEventListener('click', () => {
+    typeFilter(markLovers);
+  });
+  btnChef.addEventListener('click', () => {
+    typeFilter(markChef);
+  });
+  btnGuy.addEventListener('click', () => {
+    typeFilter(markGuy);
+  });
+  btnGirl.addEventListener('click', () => {
+    typeFilter(markGirl);
+  });
+  btnGrandmother.addEventListener('click', () => {
+    typeFilter();
+  });
+  btnGranddad.addEventListener('click', () => {
+    typeFilter();
+  });
+  menu.addEventListener('click', e => {
+    let target = e.target;
+    if (target && target.tagName == 'LI') {
+      items.forEach(btn => btn.classList.remove('active'));
+      target.classList.add('active');
+    }
+  });
+};
+/* harmony default export */ __webpack_exports__["default"] = (filter);
 
 /***/ }),
 
@@ -66,12 +140,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_requests__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/requests */ "./src/js/services/requests.js");
 
 const forms = () => {
-  const form = document.querySelectorAll('form');
-  const inputs = document.querySelectorAll('input');
-  const upload = document.querySelectorAll('[name="upload"]');
-
-  // checkNumInputs('input[name="user_phone"]');
-
+  const form = document.querySelectorAll('form'),
+    inputs = document.querySelectorAll('input'),
+    upload = document.querySelectorAll('[name="upload"]');
   const message = {
     loading: 'Загрузка...',
     success: 'Спасибо! Скоро мы с вами свяжемся',
@@ -156,7 +227,7 @@ __webpack_require__.r(__webpack_exports__);
 const mask = selector => {
   let setCursorPosition = (pos, elem) => {
     elem.focus();
-    if (elem.setSelectionRange()) {
+    if (elem.setSelectionRange) {
       elem.setSelectionRange(pos, pos);
     } else if (elem.createTextRange) {
       let range = elem.createTextRange();
@@ -167,10 +238,10 @@ const mask = selector => {
     }
   };
   function createMask(event) {
-    let matrix = '+7 (___) ___ __ __';
-    let i = 0;
-    let def = matrix.replace(/\D/g, '');
-    let val = this.value.replace(/\D/g, '');
+    let matrix = '+7 (___) ___ __ __',
+      i = 0,
+      def = matrix.replace(/\D/g, ''),
+      val = this.value.replace(/\D/g, '');
     if (def.length >= val.length) {
       val = def;
     }
@@ -178,7 +249,7 @@ const mask = selector => {
       return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? '' : a;
     });
     if (event.type === 'blur') {
-      if (this.value.length === 2) {
+      if (this.value.length == 2) {
         this.value = '';
       }
     } else {
@@ -203,8 +274,6 @@ const mask = selector => {
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
-
-
 const modals = () => {
   let btnPressed = false;
   function bindModal(triggerSelector, modalSelector, closeSelector) {
@@ -270,7 +339,7 @@ const modals = () => {
   function calcScroll() {
     let div = document.createElement('div');
     div.style.width = '50px';
-    div.style.height = '100vh';
+    div.style.height = '50px';
     div.style.overflowY = 'scroll';
     div.style.visibility = 'hidden';
     document.body.appendChild(div);
@@ -290,7 +359,7 @@ const modals = () => {
   bindModal('.button-consultation', '.popup-consultation', '.popup-consultation .popup-close');
   bindModal('.fixed-gift', '.popup-gift', '.popup-gift .popup-close', true);
   openByScroll('.fixed-gift');
-  // showModalByTime('.popup-consultation', 60 000);
+  // showModalByTime('.popup-consultation', 5000);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modals);
@@ -309,24 +378,21 @@ __webpack_require__.r(__webpack_exports__);
 const showMoreStyles = (trigger, wrapper) => {
   const btn = document.querySelector(trigger);
 
-  /*cards.forEach(card => {
-    card.classList.add('animated', 'fadeInUp');
-  });
-   btn.addEventListener('click', () => {
-    cards.forEach(card => {
-      card.classList.remove('hidden-lg', 'hidden-md', 'hidden-sm', 'hidden-xs');
-      card.classList.add('col-sm-3', 'col-sm-offset-0', 'col-xs-10', 'col-xs-offset-1');
-    });
-    // btn.style.display = 'none';
-    btn.remove();
-  });*/
+  // cards.forEach(card => {
+  //     card.classList.add('animated', 'fadeInUp');
+  // });
+
+  // btn.addEventListener('click', () => {
+  //     cards.forEach(card => {
+  //         card.classList.remove('hidden-lg', 'hidden-md', 'hidden-sm', 'hidden-xs');
+  //         card.classList.add('col-sm-3', 'col-sm-offset-0', 'col-xs-10', 'col-xs-offset-1');
+  //     });
+  //     // btn.style.display = 'none';
+  //     btn.remove();
+  // });
 
   btn.addEventListener('click', function () {
-    (0,_services_requests__WEBPACK_IMPORTED_MODULE_0__.getResource)('http://localhost:3030/styles')
-    // getResource('assets/db.json')
-    .then(res => createCards(res))
-    // .then(res => createCards(res.styles))
-    .catch(error => console.log(error));
+    (0,_services_requests__WEBPACK_IMPORTED_MODULE_0__.getResource)('assets/db.json').then(res => createCards(res.styles)).catch(error => console.log(error));
     this.remove();
   });
   function createCards(response) {
@@ -339,12 +405,12 @@ const showMoreStyles = (trigger, wrapper) => {
       let card = document.createElement('div');
       card.classList.add('animated', 'fadeInUp', 'col-sm-3', 'col-sm-offset-0', 'col-xs-10', 'col-xs-offset-1');
       card.innerHTML = `
-            <div className='styles-block'>
-              <img src=${src} alt='style'>
-              <h4>${title}</h4>
-              <a href=${link}>Подробнее</a>
-            </div>
-      `;
+                <div class="styles-block">
+                    <img src=${src} alt="style">
+                    <h4>${title}</h4>
+                    <a href=${link}>Подробнее</a>
+                </div>
+            `;
       document.querySelector(wrapper).appendChild(card);
     });
   }
@@ -360,9 +426,9 @@ const showMoreStyles = (trigger, wrapper) => {
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
-const sliders = function (slides, dir, prev, next) {
-  let slideIndex = 1;
-  let paused = false;
+const sliders = (slides, dir, prev, next) => {
+  let slideIndex = 1,
+    paused = false;
   const items = document.querySelectorAll(slides);
   function showSlides(n) {
     if (n > items.length) {
@@ -520,6 +586,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/checkTextInputs */ "./src/js/modules/checkTextInputs.js");
 /* harmony import */ var _modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/showMoreStyles */ "./src/js/modules/showMoreStyles.js");
 /* harmony import */ var _modules_calc__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/calc */ "./src/js/modules/calc.js");
+/* harmony import */ var _modules_filter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/filter */ "./src/js/modules/filter.js");
+
 
 
 
@@ -539,6 +607,7 @@ window.addEventListener('DOMContentLoaded', () => {
   (0,_modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_4__["default"])('[name = "message"]');
   (0,_modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__["default"])('.button-styles', '#styles .row');
   (0,_modules_calc__WEBPACK_IMPORTED_MODULE_6__["default"])('#size', '#material', '#options', '.promocode', '.calc-price');
+  (0,_modules_filter__WEBPACK_IMPORTED_MODULE_7__["default"])();
 });
 }();
 /******/ })()
